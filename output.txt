@@ -1,44 +1,46 @@
 driver: task[taskA] runs for 10seconds.
 session 0:round robin scheduler ----------------------------------------------------------
-parent = 802483
+parent = 803954
 scheduler (round robin): started
 
-scheduler: resumed 802484
-driver: child = 802484
-task[taskA] with pid=802484 runs for 10 seconds
+scheduler: resumed 803955
+driver: child = 803955
+task[taskA] with pid=803955 runs for 10 seconds
 taskA
 taskA
 scheduler: completed 1 quantums
 
-scheduler: resumed 802484
+scheduler: resumed 803955
 taskA
 taskA
 scheduler: completed 2 quantums
 
-scheduler: resumed 802484
+scheduler: resumed 803955
 taskA
 taskA
 scheduler: completed 3 quantums
 
-scheduler: resumed 802484
+scheduler: resumed 803955
 taskA
 taskA
 scheduler: completed 4 quantums
 
-scheduler: resumed 802484
+scheduler: resumed 803955
 taskA
 taskA
 scheduler: completed 5 quantums
 
-scheduler: resumed 802484
+scheduler: resumed 803955
 
-Task[taskA]: cpu time used: 10.000510 seconds (answer = 80.871546) count = 120312
+Task[taskA]: cpu time used: 10.000742 seconds (answer = 80.871546) count = 110594
 driver: All tasks are done
 scheduler: completed 6 quantums
-scheduler: confirmed 802484's termination
+scheduler: confirmed 803955's termination
 scheduler: has no more process to run
 driver: confirms the scheduler thread termination
 session 1:multilevel feedback queue scheduler ----------------------------------------------------------
-parent = 802483
+parent = 803954
 scheduler (multilevel feedback queue): started
+scheduler: checking level 0; slices[level] = 0
+	scheduler: setting 804013 as new current
 scheduler: has no more process to run
