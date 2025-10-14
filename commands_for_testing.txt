@@ -1,0 +1,2 @@
+./compile.sh
+./driver taskA 10 taskB 2 taskC 6 taskD 12 taskE 1 &> output.txt

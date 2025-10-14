@@ -1,0 +1,27 @@
+driver: task[taskA] runs for 10seconds.
+driver: task[taskB] runs for 2seconds.
+driver: task[taskC] runs for 6seconds.
+driver: task[taskD] runs for 12seconds.
+driver: task[taskE] runs for 1seconds.
+session 0:round robin scheduler ----------------------------------------------------------
+parent = 800299
+scheduler (round robin): started
+
+scheduler: resumed 800300
+driver: child = 800300
+task[taskA] with pid=800300 runs for 10 seconds
+taskA
+taskA
+scheduler: completed 1 quantums
+
+scheduler: resumed 800301
+driver: child = 800301
+task[taskB] with pid=800301 runs for 2 seconds
+taskB
+taskB
+scheduler: completed 2 quantums
+
+scheduler: resumed 800302
+driver: child = 800302
+task[taskC] with pid=800302 runs for 6 seconds
+taskC
