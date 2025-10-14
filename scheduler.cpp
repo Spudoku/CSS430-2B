@@ -68,14 +68,13 @@ void Scheduler::run_mfq()
   for (int i = 0; i < 3; i++)
     slices[i] = 0; // all levels start slice 0.
 
-  // terminate when all three queues are empty
   while (!queue[0].empty() || !queue[1].empty() || !queue[2].empty())
   {
     int level = 0;
     for (; level < 3; level++)
     {
       // if the current level's slice is 0.
-      if (slices[level] == 0)
+      if (slices[0] == 0)
       {
         // check the current level queue is empty.
         if (queue[level].empty())
@@ -92,44 +91,42 @@ void Scheduler::run_mfq()
       }
       else
       {
-        // if the current level's slide is 1, 2, or 3, the previous process should run continuously.
-        kill(previous, SIGCONT);
-        schedulerSleep();
-        kill(previous, SIGSTOP);
+        // if the current level's slice is 1, 2, or 3, the previous process should run continuously.
       }
     }
     // if we reached level 3, (i.e., the lowest level) and found no processes to schedule
-    // finish scheduler.cpp
-    if (level == 2 && queue[2].empty())
+    if (queue[0].empty() && queue[1].empty() && queue[2].empty())
     {
+      // finish scheduler.cpp
       break;
     }
 
     // check if a process to run is still active.
+    // if so, resumt it, calls schedulerSleep( ) to give a time quantum.
+    // then, suspends it.
     if (kill(current, 0) == 0)
-    {
-      // if so, resumt it,
-      kill(current, SIGCONT);
-
-      // calls schedulerSleep( ) to give a time quantum.
+    { // current process is alive
+      cerr << "\nscheduler: resumed " << current << endl;
+      kill(current, SIGCONT); // run it for a next quantum
       schedulerSleep();
-
-      // then, suspends it.
       kill(current, SIGSTOP);
     }
 
     // check if this process is still active.
+
     if (kill(current, 0) == 0)
     {
-      // if so and if the current level is 1 or 2,
-      if (level == 0 || level == 1)
+      queue[level].push(current);
+      if (level == 1 || level == 2)
       {
-        //  shift to a next slice
-        level++;
+        // if so and if the current level is 1 or 2, shift to a next slice
+        slices[level]++;
       }
+
       // if the next slice was wrapped back to 0. this pid should
-      if (slices[level] == 0)
+      if (slices[level] > 3)
       {
+        slices[level] = 0;
         if (level == 2)
         {
           // go back to the lowest level queue
@@ -142,9 +139,11 @@ void Scheduler::run_mfq()
         }
       }
     }
-
-    // current process is dead, print out:
-    cerr << "scheduler: confirmed " << current << "'s termination" << endl;
+    else
+    {
+      // current process is dead, print out:
+      cerr << "scheduler: confirmed " << current << "'s termination" << endl;
+    }
   }
   cerr << "scheduler: has no more process to run" << endl;
 }
