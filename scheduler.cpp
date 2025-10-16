@@ -64,7 +64,7 @@ void Scheduler::run_mfq()
   int current = 0;  // current pid
   int previous = 0; // previous pid
 
-  int slices[3]; // slice[i] means that level i's current time slice.
+  int slices[3]; // slice[i] means that level i's current time slice
   int maxSlices[] = {1, 2, 4};
   for (int i = 0; i < 3; i++)
     slices[i] = 0; // all levels start slice 0.
@@ -72,40 +72,13 @@ void Scheduler::run_mfq()
   while (true)
   {
     int level = 0;
-    for (; level < 3; level++)
-    {
-      // if the current level's slice is 0.
-      if (slices[level] == 0)
-      {
-        // check the current level queue is empty.
-        if (queue[level].empty())
-        {
-          // if so, go to a next lower level queue.
-          continue;
-        }
-        else
-        {
-          // otherwise, pick up a pid from this queue
-          current = queue[level].front();
-          queue[level].pop();
-        }
-      }
-      else
-      {
-        // if the current level's slide is 1, 2, or 3, the previous process should run continuously.
-        break;
-      }
-    }
-    // if we reached level 3, (i.e., the lowest level) and found no processes to schedul
-    if (level == 2 && queue[2].empty())
-    {
-      // finish scheduler.cpp
+    if (queue[0].empty() && queue[1].empty() && queue[2].empty()) // no more processes to terminate scheduler
       break;
-    }
 
-    // check if a process to run is still active.
-    // if so, resumt it, calls schedulerSleep( ) to give a time quantum.
-    // then, suspends it.
+    // TODO: determine current
+    // current = ?;
+
+    // check if current is alive
     if (kill(current, 0) == 0)
     { // current process is alive
       cerr << "\nscheduler: resumed " << current << endl;
@@ -113,34 +86,19 @@ void Scheduler::run_mfq()
       schedulerSleep();
       kill(current, SIGSTOP);
     }
-
-    // check if this process is still active.
-    if (kill(current, 0) == 0)
-    {
-      // if so and if the current level is 1 or 2, shift to a next slice
-      if (level == 0 || level == 1)
-      {
-        slices[level]++;
-      }
-      if (slices[level] >= maxSlices[level])
-      {
-        // if the next slice was wrapped back to 0. this pid should
-        if (level == 2)
-        {
-
-          // go back to the lowest level queue
-          queue[2].push(current);
-        }
-        else
-        {
-          // go to the next level queue
-          queue[level + 1].push(current);
-        }
-      }
-    }
     else
     {
-      // current process is dead, print out:
+      // current process is dead
+      cerr << "scheduler: confirmed " << current << "'s termination" << endl;
+      continue;
+    }
+
+    if (kill(current, 0) == 0)
+    { // current process is still alive
+      // demotion logic
+    }
+    else
+    { // current process is dead
       cerr << "scheduler: confirmed " << current << "'s termination" << endl;
     }
   }
