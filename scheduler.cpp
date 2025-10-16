@@ -69,9 +69,10 @@ void Scheduler::run_mfq()
   for (int i = 0; i < 3; i++)
     slices[i] = 0; // all levels start slice 0.
 
-  // scheduling logic
   while (!queue[0].empty() || !queue[1].empty() || !queue[2].empty())
   {
+
+    // scheduling logic
     int level = 0;
     for (; level < 3; level++)
     {
@@ -90,13 +91,14 @@ void Scheduler::run_mfq()
           // set current pid
           current = queue[level].front();
           queue[level].pop();
-          cerr << "\tscheduler: setting " << current << " as new current" << endl;
+          cerr << "\tscheduler: setting " << current << " from level " << level << " as new current" << endl;
           break;
         }
       }
       else
       {
         // slices[level] != 1; run continuously...?
+        break;
       }
     }
 
@@ -143,7 +145,7 @@ void Scheduler::run_mfq()
       }
     }
 
-        // current process is dead, print out:
+    // current process is dead, print out:
     cerr << "scheduler: confirmed " << current << "'s termination" << endl;
   }
   cerr << "scheduler: has no more process to run" << endl;

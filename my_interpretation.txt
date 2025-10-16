@@ -1,0 +1,4 @@
+The following is how I understand the mfq algorithm to work:
+
+SCHEDULING
+* choose the first 
