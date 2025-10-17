@@ -1,0 +1,46 @@
+while (at least 1 queue has a process in it) (WHILE LOOP)
+    get highest-priority item possible; assign as "current" (FOR LOOP)
+        store queue level as "level"
+        if slices[level] == 0
+            if (queue[level] is empty)
+                go to next levels
+            else 
+                current = queue[level].front
+        else 
+            break out of this loop
+        end if
+    END FOR LOOP
+
+    if all queues are empty
+        break out of while loop
+
+
+    if current is active:
+        resume current
+        call schedulerSleep()
+        suspend current
+    end if
+    
+    if current is active:
+        if level == 1 or level == 2
+            increment slices[level] by 1
+        end if
+        
+        if slices[level] >= maxSlices
+            queue[level].pop()
+            slices[level] = 0
+            if level == 0 or level == 1
+                queue[level + 1].push(current)
+            else 
+                queue[2].push(current)
+            end if
+        else 
+            continue to next while loop iteration
+        end if
+
+    else
+        confirm current is terminated
+        slices[level] = 0
+    end if
+
+END WHILE LOOP

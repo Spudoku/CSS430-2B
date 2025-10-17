@@ -71,12 +71,26 @@ void Scheduler::run_mfq()
 
   while (true)
   {
-    int level = 0;
-    if (queue[0].empty() && queue[1].empty() && queue[2].empty()) // no more processes to terminate scheduler
-      break;
+    int level = -1;
 
-    // TODO: determine current
-    // current = ?;
+    for (int i = 0; i < 3; i++)
+    {
+      if (!queue[i].empty())
+      {
+        level = i;
+        break;
+      }
+    }
+
+    if (level != -1)
+    {
+      current = queue[level].front();
+      queue[level].pop();
+    }
+    else
+    {
+      break; // no more processes to terminate scheduler
+    }
 
     // check if current is alive
     if (kill(current, 0) == 0)
@@ -86,20 +100,36 @@ void Scheduler::run_mfq()
       schedulerSleep();
       kill(current, SIGSTOP);
     }
-    else
-    {
-      // current process is dead
-      cerr << "scheduler: confirmed " << current << "'s termination" << endl;
-      continue;
-    }
 
     if (kill(current, 0) == 0)
-    { // current process is still alive
-      // demotion logic
+    {
+      if (level == 1 || level == 2)
+      {
+        slices[level]++;
+      }
+
+      if (slices[level] > maxSlices[level])
+      {
+        queue[level].pop();
+        slices[level] = 0;
+
+        if (level != 2)
+        {
+          queue[level + 1].push(current);
+        }
+        else
+        {
+          queue[2].push(current);
+        }
+      }
+      else
+      {
+      }
     }
     else
     { // current process is dead
       cerr << "scheduler: confirmed " << current << "'s termination" << endl;
+      slices[level] = 0;
     }
   }
   cerr << "scheduler: has no more process to run" << endl;
