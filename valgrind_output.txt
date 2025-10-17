@@ -1,0 +1,389 @@
+==951797== Memcheck, a memory error detector
+==951797== Copyright (C) 2002-2024, and GNU GPL'd, by Julian Seward et al.
+==951797== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
+==951797== Command: ./driver taskA 10 taskB 2 taskC 6 taskD 12 taskE 1
+==951797== 
+driver: task[taskA] runs for 10seconds.
+driver: task[taskB] runs for 2seconds.
+driver: task[taskC] runs for 6seconds.
+driver: task[taskD] runs for 12seconds.
+driver: task[taskE] runs for 1seconds.
+session 0:round robin scheduler ----------------------------------------------------------
+parent = 951797
+scheduler (round robin): started
+
+scheduler: resumed 951813
+driver: child = 951813
+task[taskA] with pid=951813 runs for 10 seconds
+taskA
+taskA
+scheduler: completed 1 quantums
+
+scheduler: resumed 951814
+driver: child = 951814
+task[taskB] with pid=951814 runs for 2 seconds
+taskB
+taskB
+scheduler: completed 2 quantums
+
+scheduler: resumed 951815
+driver: child = 951815
+task[taskC] with pid=951815 runs for 6 seconds
+taskC
+taskC
+scheduler: completed 3 quantums
+
+scheduler: resumed 951816
+driver: child = 951816
+task[taskD] with pid=951816 runs for 12 seconds
+taskD
+taskD
+scheduler: completed 4 quantums
+
+scheduler: resumed 951817
+driver: child = 951817
+task[taskE] with pid=951817 runs for 1 seconds
+taskE
+
+Task[taskE]: cpu time used: 1.000050 seconds (answer = 80.871546) count = 13316
+scheduler: completed 5 quantums
+scheduler: confirmed 951817's termination
+
+scheduler: resumed 951813
+taskA
+taskA
+scheduler: completed 6 quantums
+
+scheduler: resumed 951814
+
+Task[taskB]: cpu time used: 2.000119 seconds (answer = 80.871546) count = 26483
+scheduler: completed 7 quantums
+scheduler: confirmed 951814's termination
+
+scheduler: resumed 951815
+taskC
+taskC
+scheduler: completed 8 quantums
+
+scheduler: resumed 951816
+taskD
+taskD
+scheduler: completed 9 quantums
+
+scheduler: resumed 951813
+taskA
+taskA
+scheduler: completed 10 quantums
+
+scheduler: resumed 951815
+taskC
+taskC
+scheduler: completed 11 quantums
+
+scheduler: resumed 951816
+taskD
+taskD
+scheduler: completed 12 quantums
+
+scheduler: resumed 951813
+taskA
+taskA
+scheduler: completed 13 quantums
+
+scheduler: resumed 951815
+
+Task[taskC]: cpu time used: 6.000412 seconds (answer = 80.871546) count = 78112
+scheduler: completed 14 quantums
+scheduler: confirmed 951815's termination
+
+scheduler: resumed 951816
+taskD
+taskD
+scheduler: completed 15 quantums
+
+scheduler: resumed 951813
+taskA
+taskA
+scheduler: completed 16 quantums
+
+scheduler: resumed 951816
+taskD
+taskD
+scheduler: completed 17 quantums
+
+scheduler: resumed 951813
+
+Task[taskA]: cpu time used: 10.000690 seconds (answer = 80.871546) count = 130930
+scheduler: completed 18 quantums
+scheduler: confirmed 951813's termination
+
+scheduler: resumed 951816
+taskD
+taskD
+scheduler: completed 19 quantums
+
+scheduler: resumed 951816
+
+Task[taskD]: cpu time used: 12.000956 seconds (answer = 80.871546) count = 158449
+driver: All tasks are done
+scheduler: completed 20 quantums
+scheduler: confirmed 951816's termination
+scheduler: has no more process to run
+driver: confirms the scheduler thread termination
+session 1:multilevel feedback queue scheduler ----------------------------------------------------------
+parent = 951797
+scheduler (multilevel feedback queue): started
+level chosen: 0; current chosen: 951907; slices[level]: 0
+
+scheduler: resumed 951907
+driver: child = 951907
+task[taskA] with pid=951907 runs for 10 seconds
+taskA
+scheduler: completed 1 quantums
+	 current chosen: 951907; slices[level]: 1
+	951907 demoted to level 1
+level chosen: 0; current chosen: 951908; slices[level]: 0
+
+scheduler: resumed 951908
+driver: child = 951908
+task[taskB] with pid=951908 runs for 2 seconds
+taskB
+scheduler: completed 2 quantums
+	 current chosen: 951908; slices[level]: 1
+	951908 demoted to level 1
+level chosen: 0; current chosen: 951909; slices[level]: 0
+
+scheduler: resumed 951909
+driver: child = 951909
+task[taskC] with pid=951909 runs for 6 seconds
+taskC
+scheduler: completed 3 quantums
+	 current chosen: 951909; slices[level]: 1
+	951909 demoted to level 1
+level chosen: 0; current chosen: 951910; slices[level]: 0
+
+scheduler: resumed 951910
+driver: child = 951910
+task[taskD] with pid=951910 runs for 12 seconds
+taskD
+scheduler: completed 4 quantums
+	 current chosen: 951910; slices[level]: 1
+	951910 demoted to level 1
+level chosen: 0; current chosen: 951911; slices[level]: 0
+
+scheduler: resumed 951911
+driver: child = 951911
+task[taskE] with pid=951911 runs for 1 seconds
+taskE
+scheduler: completed 5 quantums
+	 current chosen: 951911; slices[level]: 1
+	951911 demoted to level 1
+level chosen: 1; current chosen: 951907; slices[level]: 0
+
+scheduler: resumed 951907
+taskA
+scheduler: completed 6 quantums
+	 current chosen: 951907; slices[level]: 1
+level chosen: 1; current chosen: 951907; slices[level]: 1
+
+scheduler: resumed 951907
+taskA
+scheduler: completed 7 quantums
+	 current chosen: 951907; slices[level]: 2
+	951907 demoted to level 2
+level chosen: 1; current chosen: 951908; slices[level]: 0
+
+scheduler: resumed 951908
+taskB
+scheduler: completed 8 quantums
+	 current chosen: 951908; slices[level]: 1
+level chosen: 1; current chosen: 951908; slices[level]: 1
+
+scheduler: resumed 951908
+
+Task[taskB]: cpu time used: 2.000129 seconds (answer = 80.871546) count = 25295
+scheduler: completed 9 quantums
+scheduler: confirmed 951908's termination
+level chosen: 1; current chosen: 951909; slices[level]: 0
+
+scheduler: resumed 951909
+taskC
+scheduler: completed 10 quantums
+	 current chosen: 951909; slices[level]: 1
+level chosen: 1; current chosen: 951909; slices[level]: 1
+
+scheduler: resumed 951909
+taskC
+scheduler: completed 11 quantums
+	 current chosen: 951909; slices[level]: 2
+	951909 demoted to level 2
+level chosen: 1; current chosen: 951910; slices[level]: 0
+
+scheduler: resumed 951910
+taskD
+scheduler: completed 12 quantums
+	 current chosen: 951910; slices[level]: 1
+level chosen: 1; current chosen: 951910; slices[level]: 1
+
+scheduler: resumed 951910
+taskD
+scheduler: completed 13 quantums
+	 current chosen: 951910; slices[level]: 2
+	951910 demoted to level 2
+level chosen: 1; current chosen: 951911; slices[level]: 0
+
+scheduler: resumed 951911
+
+Task[taskE]: cpu time used: 1.000037 seconds (answer = 80.871546) count = 13117
+scheduler: completed 14 quantums
+scheduler: confirmed 951911's termination
+level chosen: 2; current chosen: 951907; slices[level]: 0
+
+scheduler: resumed 951907
+taskA
+scheduler: completed 15 quantums
+	 current chosen: 951907; slices[level]: 1
+level chosen: 2; current chosen: 951907; slices[level]: 1
+
+scheduler: resumed 951907
+taskA
+scheduler: completed 16 quantums
+	 current chosen: 951907; slices[level]: 2
+level chosen: 2; current chosen: 951907; slices[level]: 2
+
+scheduler: resumed 951907
+taskA
+scheduler: completed 17 quantums
+	 current chosen: 951907; slices[level]: 3
+level chosen: 2; current chosen: 951907; slices[level]: 3
+
+scheduler: resumed 951907
+taskA
+scheduler: completed 18 quantums
+	 current chosen: 951907; slices[level]: 4
+	951907 requeued at level 2
+level chosen: 2; current chosen: 951909; slices[level]: 0
+
+scheduler: resumed 951909
+taskC
+scheduler: completed 19 quantums
+	 current chosen: 951909; slices[level]: 1
+level chosen: 2; current chosen: 951909; slices[level]: 1
+
+scheduler: resumed 951909
+taskC
+scheduler: completed 20 quantums
+	 current chosen: 951909; slices[level]: 2
+level chosen: 2; current chosen: 951909; slices[level]: 2
+
+scheduler: resumed 951909
+taskC
+scheduler: completed 21 quantums
+	 current chosen: 951909; slices[level]: 3
+level chosen: 2; current chosen: 951909; slices[level]: 3
+
+scheduler: resumed 951909
+
+Task[taskC]: cpu time used: 6.000276 seconds (answer = 80.871546) count = 78418
+scheduler: completed 22 quantums
+scheduler: confirmed 951909's termination
+level chosen: 2; current chosen: 951910; slices[level]: 0
+
+scheduler: resumed 951910
+taskD
+scheduler: completed 23 quantums
+	 current chosen: 951910; slices[level]: 1
+level chosen: 2; current chosen: 951910; slices[level]: 1
+
+scheduler: resumed 951910
+taskD
+scheduler: completed 24 quantums
+	 current chosen: 951910; slices[level]: 2
+level chosen: 2; current chosen: 951910; slices[level]: 2
+
+scheduler: resumed 951910
+taskD
+scheduler: completed 25 quantums
+	 current chosen: 951910; slices[level]: 3
+level chosen: 2; current chosen: 951910; slices[level]: 3
+
+scheduler: resumed 951910
+taskD
+scheduler: completed 26 quantums
+	 current chosen: 951910; slices[level]: 4
+	951910 requeued at level 2
+level chosen: 2; current chosen: 951907; slices[level]: 0
+
+scheduler: resumed 951907
+taskA
+scheduler: completed 27 quantums
+	 current chosen: 951907; slices[level]: 1
+level chosen: 2; current chosen: 951907; slices[level]: 1
+
+scheduler: resumed 951907
+taskA
+scheduler: completed 28 quantums
+	 current chosen: 951907; slices[level]: 2
+level chosen: 2; current chosen: 951907; slices[level]: 2
+
+scheduler: resumed 951907
+taskA
+scheduler: completed 29 quantums
+	 current chosen: 951907; slices[level]: 3
+level chosen: 2; current chosen: 951907; slices[level]: 3
+
+scheduler: resumed 951907
+
+Task[taskA]: cpu time used: 10.000497 seconds (answer = 80.871546) count = 130407
+scheduler: completed 30 quantums
+scheduler: confirmed 951907's termination
+level chosen: 2; current chosen: 951910; slices[level]: 0
+
+scheduler: resumed 951910
+taskD
+scheduler: completed 31 quantums
+	 current chosen: 951910; slices[level]: 1
+level chosen: 2; current chosen: 951910; slices[level]: 1
+
+scheduler: resumed 951910
+taskD
+scheduler: completed 32 quantums
+	 current chosen: 951910; slices[level]: 2
+level chosen: 2; current chosen: 951910; slices[level]: 2
+
+scheduler: resumed 951910
+taskD
+scheduler: completed 33 quantums
+	 current chosen: 951910; slices[level]: 3
+level chosen: 2; current chosen: 951910; slices[level]: 3
+
+scheduler: resumed 951910
+taskD
+scheduler: completed 34 quantums
+	 current chosen: 951910; slices[level]: 4
+	951910 requeued at level 2
+level chosen: 2; current chosen: 951910; slices[level]: 0
+
+scheduler: resumed 951910
+taskD
+scheduler: completed 35 quantums
+	 current chosen: 951910; slices[level]: 1
+level chosen: 2; current chosen: 951910; slices[level]: 1
+
+scheduler: resumed 951910
+
+Task[taskD]: cpu time used: 12.000614 seconds (answer = 80.871546) count = 157158
+driver: All tasks are done
+scheduler: completed 36 quantums
+scheduler: confirmed 951910's termination
+scheduler: has no more process to run
+driver: confirms the scheduler thread termination
+==951797== 
+==951797== HEAP SUMMARY:
+==951797==     in use at exit: 0 bytes in 0 blocks
+==951797==   total heap usage: 15 allocs, 15 frees, 84,640 bytes allocated
+==951797== 
+==951797== All heap blocks were freed -- no leaks are possible
+==951797== 
+==951797== For lists of detected and suppressed errors, rerun with: -s
+==951797== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

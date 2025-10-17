@@ -85,7 +85,8 @@ void Scheduler::run_mfq()
     if (level != -1)
     {
       current = queue[level].front();
-      queue[level].pop();
+
+      cerr << "level chosen: " << level << "; current chosen: " << current << "; slices[level]: " << slices[level] << endl;
     }
     else
     {
@@ -100,35 +101,43 @@ void Scheduler::run_mfq()
       schedulerSleep();
       kill(current, SIGSTOP);
     }
+    else
+    {
+      cerr << "scheduler: confirmed " << current << "'s termination" << endl;
+      slices[level] = 0;
+      queue[level].pop();
+      continue;
+    }
 
+    // requeing and/or demotion
     if (kill(current, 0) == 0)
     {
-      if (level == 1 || level == 2)
-      {
-        slices[level]++;
-      }
-
-      if (slices[level] > maxSlices[level])
+      // process is still active
+      slices[level]++;
+      cerr << "\t current chosen: " << current << "; slices[level]: " << slices[level] << endl;
+      // if maximum number of slices used, demote/requeue
+      if (slices[level] >= maxSlices[level])
       {
         queue[level].pop();
-        slices[level] = 0;
-
-        if (level != 2)
+        if (level == 2)
         {
-          queue[level + 1].push(current);
+          cerr << "\t" << current << " requeued at level 2" << endl;
+          queue[2].push(current);
+          slices[2] = 0;
         }
         else
         {
-          queue[2].push(current);
+          cerr << "\t" << current << " demoted to level " << level + 1 << endl;
+          queue[level + 1].push(current);
+          // reset slices
+          slices[level] = 0;
         }
-      }
-      else
-      {
       }
     }
     else
     { // current process is dead
       cerr << "scheduler: confirmed " << current << "'s termination" << endl;
+      queue[level].pop();
       slices[level] = 0;
     }
   }
